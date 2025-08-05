@@ -21,13 +21,29 @@ class _OnboardingState extends State<Onboarding> {
             const SizedBox(height: 28.0),
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
-              child: Text("Find Your Trash's Next Chapter!",
-                  style: AppWidget.healinetextstyle(25.0)),
+              child: Center(
+                child: Text("Find Trash's Next Chapter!",
+                    style: AppWidget.healinetextstyle(25.0)),
+              ),
             ),
-            const Spacer(),
+            SizedBox(height: 30.0),
+            Material(
+              elevation: 4.0,
+              borderRadius: BorderRadius.circular(30.0),
+              child: Container(
+                height: 50.0,
+                width: MediaQuery.of(context).size.width / 2.0,
+                decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(50.0)),
+                child: Center(
+                    child: Text("Get Started",
+                        style: AppWidget.whitetextstyle(24.0))),
+              ),
+            )
           ],
         ),
       ),
     );
   }
-}  
+}
