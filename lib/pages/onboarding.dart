@@ -12,12 +12,13 @@ class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Container(
         child: Column(
           children: [
             Image.asset("images/onboard.png"),
-            Image.asset("images/logo.png", width: 300),
+            Image.asset("images/logo.png",
+                width: 300, height: 250, fit: BoxFit.cover),
             const SizedBox(height: 28.0),
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
