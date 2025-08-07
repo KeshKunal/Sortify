@@ -49,4 +49,15 @@ class AppWidget {
       color: Colors.black54,
     );
   }
+
+  static TextStyle signupTextStyle(double size,
+      {FontWeight weight = FontWeight.w600,
+      Color color = const Color(0xFF4A4A4A)}) {
+    return TextStyle(
+      fontFamily: 'Lato',
+      fontWeight: weight,
+      fontSize: size,
+      color: color,
+    );
+  }
 }

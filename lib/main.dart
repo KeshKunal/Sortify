@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sortify/pages/home.dart';
+import 'package:sortify/pages/signup.dart';
 import 'package:sortify/pages/onboarding.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Home());
+        home: Login());
   }
 }
 
