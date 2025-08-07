@@ -51,9 +51,9 @@ class HomeState extends State<Home> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.80,
                   padding: const EdgeInsets.only(
-                      left: 10, right: 10, top: 20, bottom: 20),
+                      left: 15, right: 15, top: 20, bottom: 15),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 212, 204, 204),
+                    color: const Color.fromARGB(183, 223, 219, 219),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -63,7 +63,9 @@ class HomeState extends State<Home> {
                         offset: Offset(4, 10),
                       )
                     ],
-                    border: Border.all(color: Colors.grey.shade200, width: 2),
+                    border: Border.all(
+                        color: const Color.fromARGB(171, 207, 200, 200),
+                        width: 1),
                   ),
                   child: Image.asset(
                     "images/home1.png",
@@ -79,3 +81,5 @@ class HomeState extends State<Home> {
     );
   }
 }
+
+
