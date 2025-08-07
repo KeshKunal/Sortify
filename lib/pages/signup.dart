@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sortify/pages/login.dart';
 import 'package:sortify/services/widget_support.dart';
@@ -12,6 +13,55 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+    String email = "", password = "", name = "";
+
+  TextEditingController namecontroller = new TextEditingController();
+  TextEditingController passwordcontroller = new TextEditingController();
+  TextEditingController mailcontroller = new TextEditingController();
+
+  // The main registration logic
+  registration() async {
+    // Check if the fields are not empty before proceeding
+    if (passwordcontroller.text.isNotEmpty &&
+        namecontroller.text.isNotEmpty &&
+        mailcontroller.text.isNotEmpty) {
+      try {
+        // Await the creation of a new user with email and password
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: mailcontroller.text, password: passwordcontroller.text);
+
+        // If successful, show a success message
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Registered Successfully",
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ));
+      } on FirebaseAuthException catch (e) {
+        // Handle specific Firebase authentication errors
+        if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Password Provided is too Weak",
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ));
+        } else if (e.code == 'email-already-in-use') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.orangeAccent,
+            content: Text(
+              "Account Already exists",
+              style: TextStyle(fontSize: 18.0),
+            ),
+          ));
+        }
+      }
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

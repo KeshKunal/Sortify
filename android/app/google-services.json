@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1034070643484",
+    "project_id": "sortify-kk",
+    "storage_bucket": "sortify-kk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034070643484:android:2bfa88b5693f6d6f93e0d9",
+        "android_client_info": {
+          "package_name": "com.example.sortify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBjMMAFbBOcG9_SEtEhoNJRNIiO2NvZf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
