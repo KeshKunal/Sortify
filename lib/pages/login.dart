@@ -1,17 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:sortify/pages/login.dart';
 import 'package:sortify/services/widget_support.dart';
+import 'package:sortify/pages/signup.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignupState extends State<Signup> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +50,7 @@ class _SignupState extends State<Signup> {
                   width: MediaQuery.of(context).size.width,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                  height: MediaQuery.of(context).size.height / 1.8,
+                  height: MediaQuery.of(context).size.height / 2.0,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,25 +58,10 @@ class _SignupState extends State<Signup> {
                         height: 10.0,
                       ),
                       Center(
-                          child: Text("Create Account",
+                          child: Text("Welcome Back!",
                               style: AppWidget.blacktextstyle(25.0))),
                       SizedBox(
                         height: 20.0,
-                      ),
-                      Text("Name", style: AppWidget.signupTextStyle(20.0)),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFFececf8),
-                            borderRadius: BorderRadius.circular(12.0)),
-                        child: TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Enter Name",
-                              prefixIcon: Icon(Icons.person_outline)),
-                        ),
                       ),
                       SizedBox(
                         height: 10.0,
@@ -117,8 +100,18 @@ class _SignupState extends State<Signup> {
                         ),
                       ),
                       SizedBox(
-                        height: 30.0,
+                        height: 15.0,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Forgot Password?",
+                            style: AppWidget.lighttextstyle(15.0),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
                       Center(
                         child: Container(
                           height: 45.0,
@@ -128,7 +121,7 @@ class _SignupState extends State<Signup> {
                               borderRadius: BorderRadius.circular(15.0)),
                           child: Center(
                             child: Text(
-                              "SIGNUP",
+                              "LOGIN",
                               style: AppWidget.whitetextstyle(20.0),
                             ),
                           ),
@@ -139,7 +132,7 @@ class _SignupState extends State<Signup> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Already have an account?",
+                            "Don't have an account?",
                             style: AppWidget.lighttextstyle(15.0),
                           ),
                           SizedBox(width: 10.0),
@@ -148,11 +141,11 @@ class _SignupState extends State<Signup> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Login()));
+                                      builder: (context) => Signup()));
                             },
                             child: Text(
-                              "Login",
-                              style: AppWidget.blacktextstyle(20.0),
+                              "Signup",
+                              style: AppWidget.blacktextstyle(18.0),
                             ),
                           )
                         ],

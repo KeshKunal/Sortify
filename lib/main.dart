@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:sortify/pages/home.dart';
 import 'package:sortify/pages/signup.dart';
 import 'package:sortify/pages/onboarding.dart';
+import 'package:sortify/pages/login.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key});  
 
   // This widget is the root of your application.
   @override
