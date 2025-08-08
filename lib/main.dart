@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sortify/pages/home.dart';
-import 'package:sortify/pages/signup.dart';
-import 'package:sortify/pages/onboarding.dart';
 import 'package:sortify/pages/login.dart';
+import 'package:sortify/pages/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
