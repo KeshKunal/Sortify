@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class AppWidget {
   static TextStyle healinetextstyle(double size) {
     return TextStyle(
-        color: Colors.black,
-        fontSize: size,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.1);
+      color: Colors.black,
+      fontSize: size,
+      fontWeight: FontWeight.bold,
+    );
   }
 
   static TextStyle blacktextstyle(double size) {

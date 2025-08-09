@@ -44,9 +44,10 @@ class _SignupState extends State<Signup> {
           "Id": Id,
         };
 
+        await SharedpreferenceHelper().saveUserId(Id);
         await SharedpreferenceHelper().saveUserEmail(mailcontroller.text);
         await SharedpreferenceHelper().saveUserName(namecontroller.text);
-        await DatabaseMethod().addUserInfo(userInfoMap, Id);
+        await DatabaseMethod().addUserDetails(userInfoMap, Id);
 
         print("3. User data saved. Showing success SnackBar...");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -73,7 +74,7 @@ class _SignupState extends State<Signup> {
 
         print("4. Navigating to Home page...");
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Login()));
+            context, MaterialPageRoute(builder: (context) => Home()));
       } on FirebaseAuthException catch (e) {
         print("FIREBASE AUTH ERROR: ${e.code}"); // Print the error code
         if (e.code == 'weak-password') {

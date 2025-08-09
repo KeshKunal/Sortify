@@ -1,9 +1,9 @@
-// --> ADDED: Necessary imports for Firebase, navigation, and helpers.
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sortify/pages/home.dart';
 import 'package:sortify/services/widget_support.dart';
 import 'package:sortify/pages/signup.dart';
+import 'package:sortify/services/shared_pref.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -21,8 +21,11 @@ class _LoginState extends State<Login> {
     if (mailcontroller.text.isNotEmpty && passwordcontroller.text.isNotEmpty) {
       try {
         // Attempt to sign in the user with their email and password
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: mailcontroller.text, password: passwordcontroller.text);
+        final userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: mailcontroller.text, password: passwordcontroller.text);
+        String userId = userCredential.user!.uid;
+        await SharedpreferenceHelper().saveUserId(userId);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green,
           content: Row(
@@ -45,7 +48,7 @@ class _LoginState extends State<Login> {
           ),
         ));
         // If login is successful, navigate to the home page
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Home()));
       } on FirebaseAuthException catch (e) {
         // Handle specific Firebase authentication errors
