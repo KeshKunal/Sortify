@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sortify/Admin/admin_approval.dart';
 import 'package:sortify/pages/Upload_item.dart';
 import 'package:sortify/pages/home.dart';
 import 'package:sortify/pages/login.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Login());
+        home: AdminApproval());
   }
 }
 
