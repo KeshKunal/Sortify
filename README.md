@@ -1,4 +1,4 @@
-# Sortify - Turn Trash into Treasure! ♻️
+# Sortify - Turn Trash into Treasure! ♻️ (Under Active Development)
 
 Sortify is a Flutter-based mobile application designed to connects users with recyclers, making waste collection quick and hassle-free. It provides an easy-to-use platform for users to schedule pickups for their recyclable waste and earn reward points, which can be redeemed for real money via UPI.
 
@@ -103,6 +103,22 @@ This project was built to meet the following specific requirements:
 * **Data Management:** The app uses **Firebase (Firestore and Storage)** as its cloud-based data management system.
 * **Advanced Features:** The project integrates with the Firebase suite, a comprehensive backend service, to handle authentication, database, and file storage.
 * **Clean, User-Friendly Design:** The UI is designed to be intuitive, visually appealing, and easy to navigate, ensuring a positive user experience.
+
+---
+## 🚧 Current Status & Future Roadmap
+
+This project is under active development. While the core features are functional, I am continuously working on fixing bugs and adding new features to enhance the user experience.
+
+Here are some of the key features planned for upcoming releases:
+
+* **Request Tracking:** Implementing a status tracker for users to see the current stage of their upload requests (e.g., Pending Approval, Approved, Scheduled for Pickup, Completed).
+* **Recycler Marketplace:** Giving users the option to choose from a list of different local recyclers or waste collectors based on ratings and proximity.
+* **Competitive Points System:**
+    * Showing users the **expected points** they can earn for their items before submitting a request.
+    * Allowing users to **compare reward offers** from different recyclers to maximize their earnings.
+* **Performance improvements** and ongoing bug fixes.
+
+Contributions and suggestions are always welcome!
 
 ---
 
