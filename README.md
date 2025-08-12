@@ -31,9 +31,9 @@ The user journey is designed to be simple and rewarding.
 
 | Onboarding | Signup / Login | Home |
 | :---: | :---: | :---: |
-| *Your Screenshot Here*<br>![Onboarding Screen](images/visuals/onboarding.jpg) | *Your Screenshot Here*<br>![Login Screen](images/visuals/login.jpg) | *Your Screenshot Here*<br>![Home Screen](images/visuals/Home1.jpg) |
+| <br>![Onboarding Screen](images/visuals/onboarding.jpg) | <br>![Login Screen](images/visuals/login.jpg) | <br>![Home Screen](images/visuals/Home1.jpg) |
 | **Upload Items** | **Rewards Corner** | **Profile Page** |
-| *Your Screenshot Here*<br>![Upload Item Screen](images/visuals/uploaditem.jpg) | *Your Screenshot Here*<br>![Rewards Screen](images/visuals/rewards.jpg) | *Your Screenshot Here*<br>![Profile Screen](images/visuals/profile.jpg) |
+| <br>![Upload Item Screen](images/visuals/uploaditem.jpg) | <br>![Rewards Screen](images/visuals/rewards.jpg) | <br>![Profile Screen](images/visuals/profile.jpg) |
 
 ### Admin Flow
 
@@ -41,7 +41,7 @@ The admin panel is straightforward, allowing for quick verification and approval
 
 | Item Approval | Redeem Request Approval |
 | :---: | :---: |
-| *Your Screenshot Here*<br>![Item Approval Screen](images/visuals/itemapproval.jpg) | *Your Screenshot Here*<br>![Redeem Approval Screen](images/visuals/redeemapproval.jpg) |
+| <br>![Item Approval Screen](images/visuals/itemapproval.jpg) | <br>![Redeem Approval Screen](images/visuals/redeemapproval.jpg) |
 
 ---
 
