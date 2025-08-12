@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sortify/services/widget_support.dart';
+import 'package:sortify/pages/signup.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -28,18 +29,26 @@ class _OnboardingState extends State<Onboarding> {
               ),
             ),
             SizedBox(height: 30.0),
-            Material(
-              elevation: 4.0,
-              borderRadius: BorderRadius.circular(30.0),
-              child: Container(
-                height: 50.0,
-                width: MediaQuery.of(context).size.width / 2.0,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(50.0)),
-                child: Center(
-                    child: Text("Get Started",
-                        style: AppWidget.whitetextstyle(24.0))),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Signup()),
+                );
+              },
+              child: Material(
+                elevation: 4.0,
+                borderRadius: BorderRadius.circular(30.0),
+                child: Container(
+                  height: 50.0,
+                  width: MediaQuery.of(context).size.width / 2.0,
+                  decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(50.0)),
+                  child: Center(
+                      child: Text("Get Started",
+                          style: AppWidget.whitetextstyle(24.0))),
+                ),
               ),
             )
           ],

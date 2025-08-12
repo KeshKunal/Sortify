@@ -145,6 +145,7 @@ class _PointsState extends State<Points> {
                       "UPI": upicontroller.text,
                       "Status": "Pending",
                       "Date": formattedDate,
+                      "UserId": id,
                     };
                     String redeemid = randomAlphaNumeric(10);
                     await DatabaseMethod()
@@ -254,7 +255,8 @@ class _PointsState extends State<Points> {
                               child: Text(
                                 statusText,
                                 style: TextStyle(
-                                    color: Colors.red,
+                                    color:
+                                        const Color.fromARGB(255, 20, 13, 227),
                                     fontSize: 18.0,
                                     fontWeight: FontWeight.bold),
                               ),
