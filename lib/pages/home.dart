@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sortify/pages/Upload_item.dart';
+import 'package:sortify/pages/points.dart';
 import 'package:sortify/services/shared_pref.dart';
 import 'package:sortify/services/widget_support.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sortify/pages/profile.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,29 +14,33 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  String? id;
-  bool _isLoading = true;
+  String? id, mypoints, name;
 
-  // REPLACE your current onthedoad() method with this one
+  // ADD YOUR WORKING FUNCTION HERE
+  Future<String> getUserPoints(String docId) async {
+    try {
+      DocumentSnapshot docSnapshot =
+          await FirebaseFirestore.instance.collection('users').doc(docId).get();
+      if (docSnapshot.exists) {
+        var data = docSnapshot.data() as Map<String, dynamic>;
+        var points = data['Points'];
+        return points.toString();
+      } else {
+        return "0";
+      }
+    } catch (e) {
+      print('Error: $e');
+      return "0";
+    }
+  }
 
   ontheload() async {
-    try {
-      // Attempt to get the user ID
-      id = await SharedpreferenceHelper().getUserId();
-    } catch (e) {
-      // If an error occurs, print it to the debug console for you to see
-      print("Error fetching user data: $e");
-      // You can decide what to do here. Maybe 'id' should be a default value.
-    } finally {
-      // This 'finally' block will ALWAYS run, whether there was an error or not.
-      // It guarantees we stop loading.
-      if (mounted) {
-        // 'mounted' checks if the widget is still on the screen
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    id = await SharedpreferenceHelper().getUserId();
+    name = await SharedpreferenceHelper().getUserName(); // Also fetch the name
+    if (id != null) {
+      mypoints = await getUserPoints(id!);
     }
+    setState(() {});
   }
 
   @override
@@ -46,7 +53,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: _isLoading
+      body: mypoints == null
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: SingleChildScrollView(
@@ -63,20 +70,29 @@ class HomeState extends State<Home> {
                                 style: AppWidget.blacktextstyle(25.0)),
                           ),
                           Text(
-                            "Keshav!",
+                            name! + "!",
                             style: AppWidget.greentextstyle(30.0),
                           ),
                           Spacer(),
                           // A profile icon
-                          Padding(
-                            padding: const EdgeInsets.only(right: 21.0),
-                            child: CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.green.shade100,
-                              child: Icon(
-                                Icons.person_outline,
-                                color: AppWidget.greentextstyle(35.0).color,
-                                size: 28,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Profile()),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 21.0),
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.green.shade100,
+                                child: Icon(
+                                  Icons.person_outline,
+                                  color: AppWidget.greentextstyle(35.0).color,
+                                  size: 28,
+                                ),
                               ),
                             ),
                           )
@@ -86,35 +102,49 @@ class HomeState extends State<Home> {
                       // Points Display
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Container(
-                          padding: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                              color: Color(0xFF4CAF50), // A vibrant green
-                              borderRadius: BorderRadius.circular(20.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.green.withOpacity(0.3),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 5),
-                                )
-                              ]),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Your Points",
-                                      style: AppWidget.whitetextstyle(18.0)
-                                          .copyWith(color: Colors.white70)),
-                                  SizedBox(height: 5),
-                                  Text("4,250",
-                                      style: AppWidget.whitetextstyle(36.0)),
-                                ],
-                              ),
-                              Spacer(),
-                              Icon(Icons.attach_money_rounded,
-                                  color: Colors.yellow.shade600, size: 60)
-                            ],
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Points()),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            decoration: BoxDecoration(
+                                color: Color(0xFF4CAF50), // A vibrant green
+                                borderRadius: BorderRadius.circular(20.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.green.withOpacity(0.3),
+                                    blurRadius: 10,
+                                    offset: Offset(0, 5),
+                                  )
+                                ]),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Your Points",
+                                        style: AppWidget.whitetextstyle(18.0)
+                                            .copyWith(color: Colors.white70)),
+                                    SizedBox(height: 5),
+                                    Text(mypoints!,
+                                        style: AppWidget.whitetextstyle(36.0)),
+                                  ],
+                                ),
+                                Spacer(),
+                                Image.asset(
+                                  'images/coin.png',
+                                  height: 80,
+                                  width: 80,
+                                ),
+                                Icon(Icons.arrow_forward_ios_rounded,
+                                    color: Colors.white, size: 30)
+                              ],
+                            ),
                           ),
                         ),
                       ),

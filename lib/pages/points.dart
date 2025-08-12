@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:random_string/random_string.dart';
 import 'package:sortify/services/database.dart';
 import 'package:sortify/services/shared_pref.dart';
 import 'package:sortify/services/widget_support.dart';
@@ -12,17 +14,20 @@ class Points extends StatefulWidget {
 }
 
 class _PointsState extends State<Points> {
-  String? id, mypoints;
+  String? id, mypoints, name;
+  Stream? pointsStream;
   TextEditingController pointscontroller = TextEditingController();
   TextEditingController upicontroller = TextEditingController();
 
   Future<void> getthesharedpref() async {
     id = await SharedpreferenceHelper().getUserId();
+    name = await SharedpreferenceHelper().getUserName();
     setState(() {});
   }
 
   Future<void> ontheload() async {
     await getthesharedpref();
+    pointsStream = await DatabaseMethod().getUserTransactions(id!);
     if (id != null) {
       mypoints = await getUserPoints(id!);
       setState(() {});
@@ -123,6 +128,8 @@ class _PointsState extends State<Points> {
                       int.tryParse(pointscontroller.text) != null &&
                       int.parse(mypoints!) >=
                           int.parse(pointscontroller.text)) {
+                    DateTime now = DateTime.now();
+                    String formattedDate = DateFormat('d\nMMM').format(now);
                     int updatedpoints =
                         int.parse(mypoints!) - int.parse(pointscontroller.text);
                     await DatabaseMethod()
@@ -131,6 +138,19 @@ class _PointsState extends State<Points> {
                     setState(() {
                       mypoints = updatedpoints.toString();
                     });
+
+                    Map<String, dynamic> userRedeemMap = {
+                      "Name": name,
+                      "Points": pointscontroller.text,
+                      "UPI": upicontroller.text,
+                      "Status": "Pending",
+                      "Date": formattedDate,
+                    };
+                    String redeemid = randomAlphaNumeric(10);
+                    await DatabaseMethod()
+                        .addUserRedeemPoints(userRedeemMap, id!, redeemid);
+                    await DatabaseMethod()
+                        .addAdminRedeemRequests(userRedeemMap, redeemid);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -161,6 +181,93 @@ class _PointsState extends State<Points> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget allApprovals() {
+    return StreamBuilder(
+      stream: pointsStream,
+      builder: (context, AsyncSnapshot snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  final data = ds.data() as Map<String, dynamic>;
+
+                  // Use the '??' operator to provide a default value if the field is null
+                  final dateText = data['Date'] ?? 'No\nDate';
+                  final pointsText = data['Points'] ?? '0';
+                  final statusText = data['Status'] ?? 'Unknown';
+
+                  return Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.only(left: 20.0, right: 20.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 233, 233, 249),
+                        borderRadius: BorderRadius.circular(15.0)),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(12.0)),
+                          child: Text(
+                            dateText,
+                            textAlign: TextAlign.center,
+                            style: AppWidget.whitetextstyle(20.0),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Redeemed Points",
+                              style: AppWidget.normaltextstyle(18.0),
+                            ),
+                            Text(
+                              pointsText,
+                              style: AppWidget.greentextstyle(25.0),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            Text(
+                              "Status",
+                              style: AppWidget.blacktextstyle(18.0),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: const Color.fromARGB(49, 207, 56, 45),
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              child: Text(
+                                statusText,
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+              )
+            : Container();
+      },
     );
   }
 
@@ -262,6 +369,33 @@ class _PointsState extends State<Points> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(77, 250, 250, 250),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            "-- Transaction History --",
+                            style: AppWidget.signupTextStyle(22.0),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                              height: MediaQuery.of(context).size.height / 2,
+                              child: allApprovals()),
+                        ],
                       ),
                     ),
                   ],

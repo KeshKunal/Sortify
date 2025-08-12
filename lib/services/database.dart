@@ -32,6 +32,14 @@ class DatabaseMethod {
         .snapshots();
   }
 
+  Future<Stream<QuerySnapshot>> getUserTransactions(String id) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(id)
+        .collection("Redeem")
+        .snapshots();
+  }
+
   Future updateAdminRequest(
     String id,
   ) async {
@@ -57,5 +65,35 @@ class DatabaseMethod {
         .update({"Points": points});
   }
 
+  Future addUserRedeemPoints(
+      Map<String, dynamic> userInfoMap, String id, String redeemid) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(id)
+        .collection("Redeem")
+        .doc(redeemid)
+        .set(userInfoMap);
+  }
 
+  Future addAdminRedeemRequests(
+      Map<String, dynamic> userInfoMap, String redeemid) async {
+    return await FirebaseFirestore.instance
+        .collection("Redeem")
+        .doc(redeemid)
+        .set(userInfoMap);
+  }
+
+  Future<String?> getUserPointsById(String id) async {
+    try {
+      DocumentSnapshot doc =
+          await FirebaseFirestore.instance.collection("users").doc(id).get();
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return data["Points"]?.toString();
+      }
+    } catch (e) {
+      print("Error fetching user points: $e");
+    }
+    return "0";
+  }
 }

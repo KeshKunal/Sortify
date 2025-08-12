@@ -63,10 +63,15 @@ class _UploadItemState extends State<UploadItem> {
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(60),
                             ),
-                            child: Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              color: Colors.white,
-                              size: 30.0,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                color: Colors.white,
+                                size: 30.0,
+                              ),
                             )),
                       ),
                       SizedBox(width: MediaQuery.of(context).size.width / 5.5),
@@ -221,7 +226,6 @@ class _UploadItemState extends State<UploadItem> {
                                     "UserId": id,
                                     "Name": name,
                                     "Status": "Pending",
-
                                   };
 
                                   await DatabaseMethod()

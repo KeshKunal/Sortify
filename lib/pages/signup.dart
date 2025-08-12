@@ -8,6 +8,7 @@ import 'package:sortify/pages/login.dart';
 import 'package:sortify/services/database.dart';
 import 'package:sortify/services/shared_pref.dart';
 import 'package:sortify/services/widget_support.dart';
+import 'package:sortify/pages/bottomnav.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
